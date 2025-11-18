@@ -259,20 +259,6 @@
     `;
   }
 
-  // ----- Swipe dot indicator -----
-  const slider = document.getElementById("slider");
-  slider.addEventListener("scroll", function () {
-    const scrollX = slider.scrollLeft;
-    const pageWidth = window.innerWidth;
-
-    if (scrollX < pageWidth / 2) {
-      document.getElementById("dot1").classList.add("active");
-      document.getElementById("dot2").classList.remove("active");
-    } else {
-      document.getElementById("dot1").classList.remove("active");
-      document.getElementById("dot2").classList.add("active");
-    }
-  });
 </script>
 
 </body>
