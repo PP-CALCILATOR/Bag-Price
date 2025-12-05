@@ -4,8 +4,8 @@ const urlsToCache = [
   "./",
   "./index.html",
   "./manifest.json",
-  "./1000033979_imresizer.png",
-  "./1000033979_imresizer(1).png"
+  "./android-chrome-192×192.png",
+  "./android-chrome-512×512.png"
 ];
 
 // Install event – cache all needed files
