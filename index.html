@@ -58,30 +58,34 @@
     border: 1px solid #ccc;
     font-size: 15px;
   }
+ 
 button {
-  background-image: white;
-  border-color: grey;
-  border-style: solid;
-  border-width: 1px;
-  border-radius: 3px;
-  box-shadow: rgba(255,255,255,.6) 0 1px 0 inset;
-  font-size: 14px;
-  height: 29px;
-  outline: 0;
-  overflow: hidden;
-  padding: 0 11px;
-  text-align: center;
-  text-decoration: none;
-  text-overflow: ellipsis;
-  
-}
+  margin-top: 20px;
+  padding: 12px;
+  width: 100%;
+  font-size: 16px;
+  font-weight: 600;
 
-button:active:hover {
-  border-bottom-color: grey;
+  background: #ffffff;           /* pure white button */
+  color: #000000;                /* dark text */
+  border: 1px solid #d0d0d0;     /* soft grey border */
+  border-radius: 8px;            /* smooth corners */
+
+  cursor: pointer;
+  box-shadow: none;              /* clean flat look */
 }
 
 button:hover {
-  border-color: black;
+  background: #f2f2f2;           /* very light grey hover */
+}
+
+button:active {
+  background: #e6e6e6;           /* subtle press color */
+}
+
+button:focus {
+  outline: none;
+  border-color: #999999;
 }
 
   #resultPP, #resultRexine {
