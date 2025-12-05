@@ -237,7 +237,7 @@ function calculatePP() {
   const density = parseFloat(document.getElementById("density").value);
   const pricePerKg = parseFloat(document.getElementById("pricePerKg").value);
 
-  
+  if (!validateFields([length, width, thickness, density, pricePerKg], "resultPP")) return;
 
   let lengthCm = unit === "inch" ? length * 2.54 : length;
   let widthCm  = unit === "inch" ? width * 2.54  : width;
@@ -261,7 +261,8 @@ function calculateRexine() {
   const pw = parseFloat(document.getElementById('rexPieceW').value);
   const ph = parseFloat(document.getElementById('rexPieceH').value);
   const costPerMeter = parseFloat(document.getElementById('rexCost').value);
- 
+
+  if (!validateFields([w, hMeters, pw, ph, costPerMeter], "resultRexine")) return;
 
   const hInches = hMeters * 39.3701;
 
@@ -288,10 +289,10 @@ function calculateRexine() {
     <p><b>Cost per bag (4 pcs):</b> ₹${costPerBag.toFixed(2)}</p>
   `;
 }
- /* -------- COMBINED VALIDATION BLOCK -------- */
+/* -------- COMBINED VALIDATION BLOCK -------- */
 function validateFields(values, resultElementId) {
   for (let v of values) {
-    if (isNaN(v)) {
+    if (isNaN(v) || v === null) {
       document.getElementById(resultElementId).innerHTML = `
         <h3>Result</h3>
         <p>Details incomplete</p>
