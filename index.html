@@ -60,17 +60,33 @@
   }
 
   button {
-    margin-top: 20px;
-    padding: 10px;
-    width: 100%;
-    font-size: 16px;
-    background: #007bff;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-  }
-  button:hover { background: #0056b3; }
+  margin-top: 20px;
+  padding: 12px;
+  width: 100%;
+  font-size: 16px;
+  font-weight: 600;
+
+  background: #ffffff;           /* pure white button */
+  color: #000000;                /* dark text */
+  border: 1px solid #d0d0d0;     /* soft grey border */
+  border-radius: 8px;            /* smooth corners */
+
+  cursor: pointer;
+  box-shadow: none;              /* clean flat look */
+}
+
+button:hover {
+  background: #f2f2f2;           /* very light grey hover */
+}
+
+button:active {
+  background: #e6e6e6;           /* subtle press color */
+}
+
+button:focus {
+  outline: none;
+  border-color: #999999;
+}
 
   #resultPP, #resultRexine {
     margin-top: 20px;
