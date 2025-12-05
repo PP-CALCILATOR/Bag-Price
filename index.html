@@ -290,6 +290,19 @@ function calculateRexine() {
     <p><b>Cost per bag (4 pcs):</b> ₹${costPerBag.toFixed(2)}</p>
   `;
 }
+ /* -------- COMBINED VALIDATION BLOCK -------- */
+function validateFields(values, resultElementId) {
+  for (let v of values) {
+    if (isNaN(v)) {
+      document.getElementById(resultElementId).innerHTML = `
+        <h3>Result</h3>
+        <p>Details incomplete</p>
+      `;
+      return false;
+    }
+  }
+  return true;
+}
 </script>
 
 </body>
