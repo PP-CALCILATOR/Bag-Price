@@ -4,10 +4,9 @@
   "description": "PP sheet and Rexine bag price calculator with offline support.",
   "start_url": "./index.html",
   "scope": "./",
-  "display": "fullscreen"
+  "display": "fullscreen",
   "background_color": "#ffffff",
   "theme_color": "#007bff",
-
   "icons": [
     {
       "src": "192.png",
