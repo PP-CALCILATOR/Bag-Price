@@ -239,10 +239,7 @@ function calculatePP() {
   const density = parseFloat(document.getElementById("density").value);
   const pricePerKg = parseFloat(document.getElementById("pricePerKg").value);
 
-  if (!length || !width || !thickness || !density || !pricePerKg) {
-    alert("Please fill all fields.");
-    return;
-  }
+  
 
   let lengthCm = unit === "inch" ? length * 2.54 : length;
   let widthCm  = unit === "inch" ? width * 2.54  : width;
@@ -266,11 +263,7 @@ function calculateRexine() {
   const pw = parseFloat(document.getElementById('rexPieceW').value);
   const ph = parseFloat(document.getElementById('rexPieceH').value);
   const costPerMeter = parseFloat(document.getElementById('rexCost').value);
-
-  if (!w || !hMeters || !pw || !ph || !costPerMeter) {
-    alert("Please fill all fields.");
-    return;
-  }
+ 
 
   const hInches = hMeters * 39.3701;
 
