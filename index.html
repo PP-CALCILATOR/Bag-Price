@@ -134,7 +134,7 @@ button:focus {
 <div id="passwordBox">
   <div id="passwordCard">
     <h3>Enter PP Calculator Password</h3>
-    <input type="password" id="passwordInput" placeholder="Password">
+    <input type="password" enterkeyhint="done" id="passwordInput" placeholder="Password">
     <button onclick="checkPassword()">Unlock</button>
     <div id="passwordError">Incorrect password</div>
   </div>
@@ -149,10 +149,10 @@ button:focus {
 
       <div id="ppApp" style="display:none;">
         <label>Length:</label>
-        <input type="number" id="length">
+        <input type="text" inputmode="numeric" id="length">
 
         <label>Width:</label>
-        <input type="number" id="width">
+        <input type="text" inputmode="numeric" id="width">
 
         <label>Unit:</label>
         <select id="unit">
@@ -161,13 +161,13 @@ button:focus {
         </select>
 
         <label>Thickness (micron):</label>
-        <input type="number" id="thickness" value="180">
+        <input type="text" inputmode="numeric" id="thickness" value="180">
 
         <label>Density (g/cm³):</label>
-        <input type="number" id="density" value="0.93" step="0.01">
+        <input type="text" inputmode="numeric" id="density" value="0.93" step="0.01">
 
         <label>Price per kg (₹):</label>
-        <input type="number" id="pricePerKg" value="125">
+        <input type="text" inputmode="numeric" id="pricePerKg" value="125">
 
         <button onclick="calculatePP()">Calculate</button>
 
@@ -182,19 +182,19 @@ button:focus {
       <h2>Rexine Bag Cost Calculator</h2>
 
       <label>Roll Width (inches)</label>
-      <input type="number" id="rexWidth" value="54">
+      <input type="text" inputmode="numeric" id="rexWidth" value="54">
 
       <label>Length Used (meters)</label>
-      <input type="number" id="rexHeight" value="1" step="0.01">
+      <input type="text" inputmode="numeric" id="rexHeight" value="1" step="0.01">
 
       <label>Piece Width (inches)</label>
-      <input type="number" id="rexPieceW" step="0.01">
+      <input type="text" inputmode="numeric" id="rexPieceW" step="0.01">
 
       <label>Piece Height (inches)</label>
-      <input type="number" id="rexPieceH" step="0.01">
+      <input type="text" inputmode="numeric" id="rexPieceH" step="0.01">
 
       <label>Price per meter (₹)</label>
-      <input type="number" id="rexCost" value="160">
+      <input type="text" inputmode="numeric" id="rexCost" value="160">
 
       <button onclick="calculateRexine()">Calculate</button>
 
@@ -206,12 +206,7 @@ button:focus {
 
 <script>
  
- document.addEventListener("keydown", e => {
-  if (e.key === "Enter") {
-    e.preventDefault();
-    calculate();
-  }
-});
+
 /* ---------------- PASSWORD SYSTEM ---------------- */
 const PASSWORD = "pp123";
 
