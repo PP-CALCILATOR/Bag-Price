@@ -134,8 +134,7 @@ button:focus {
 <div id="passwordBox">
   <div id="passwordCard">
     <h3>Enter PP Calculator Password</h3>
-    <input type="password" enterkeyhint="done" id="passwordInput" placeholder="Password">
-    <button onclick="checkPassword()">Unlock</button>
+    <input type="password" id="passwordInput" placeholder="Password">
     <div id="passwordError">Incorrect password</div>
   </div>
 </div>
@@ -210,16 +209,20 @@ button:focus {
 /* ---------------- PASSWORD SYSTEM ---------------- */
 const PASSWORD = "pp123";
 
-function checkPassword() {
-  const entered = document.getElementById("passwordInput").value;
+const input = document.getElementById("passwordInput");
+const error = document.getElementById("passwordError");
+
+input.addEventListener("input", () => {
+  const entered = input.value;
+
+  // Hide error while typing
+  error.style.display = "none";
 
   if (entered === PASSWORD) {
     document.getElementById("passwordBox").style.display = "none";
     document.getElementById("ppApp").style.display = "block";
-  } else {
-    document.getElementById("passwordError").style.display = "block";
   }
-}
+});
 
 /* ---------------- PP CALCULATOR ---------------- */
 function calculatePP() {
