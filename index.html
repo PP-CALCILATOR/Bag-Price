@@ -205,6 +205,13 @@ button:focus {
 </div>
 
 <script>
+ 
+ document.addEventListener("keydown", e => {
+  if (e.key === "Enter") {
+    e.preventDefault();
+    calculate();
+  }
+});
 /* ---------------- PASSWORD SYSTEM ---------------- */
 const PASSWORD = "pp123";
 
