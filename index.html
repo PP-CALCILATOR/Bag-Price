@@ -24,11 +24,14 @@
 
   /* Swipe container */
   .container {
-    display: flex;
-    overflow-x: scroll;
-    scroll-snap-type: x mandatory;
-    width: 100vw;
-    height: 100vh;
+  display: flex;
+  overflow-x: scroll;
+  scroll-snap-type: x mandatory;
+  scroll-snap-stop: always; /* optional */
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  width: 100vw;
+  height: 100vh;
   }
   .page {
     flex: 0 0 100vw;
