@@ -3,10 +3,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PP + Rexine Calculator</title>
+
 <style>
-  * {
-    box-sizing: border-box;
-  }
+  * { box-sizing: border-box; }
   body {
     font-family: Arial, sans-serif;
     background: #f5f7fa;
@@ -29,7 +28,7 @@
     overflow-y: auto;
   }
 
-  /* Shared card layout */
+  /* Cards */
   .card {
     background: #ffffff;
     padding: 20px;
@@ -39,16 +38,8 @@
     box-shadow: 0 0 6px rgba(0,0,0,0.08);
   }
 
-  h1, h2 {
-    text-align: center;
-    margin-top: 0;
-  }
-
-  label {
-    display: block;
-    margin-top: 10px;
-    font-weight: bold;
-  }
+  h2 { text-align: center; margin-top: 0; }
+  label { display: block; margin-top: 12px; font-weight: bold; }
 
   input, select {
     width: 100%;
@@ -70,9 +61,7 @@
     border-radius: 8px;
     cursor: pointer;
   }
-  button:hover {
-    background: #0056b3;
-  }
+  button:hover { background: #0056b3; }
 
   #resultPP, #resultRexine {
     margin-top: 20px;
@@ -83,30 +72,63 @@
     box-shadow: 0 0 4px rgba(0,0,0,0.1);
   }
 
-  .denied {
+  /* Password popup */
+  #passwordBox {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #passwordCard {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 320px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
     text-align: center;
+  }
+  #passwordCard input {
+    margin-top: 15px;
+    text-align: center;
+    font-size: 18px;
+    letter-spacing: 2px;
+  }
+  #passwordError {
     color: red;
-    margin-top: 40px;
-    font-weight: bold;
+    margin-top: 10px;
+    display: none;
   }
 </style>
-<link rel="icon" type="image/x-icon" href="favicon.ico">
+
 </head>
 <body>
 
-<div class="container" id="slider">
+<!-- PASSWORD OVERLAY -->
+<div id="passwordBox">
+  <div id="passwordCard">
+    <h3>Enter PP Calculator Password</h3>
+    <input type="password" id="passwordInput" placeholder="Password">
+    <button onclick="checkPassword()">Unlock</button>
+    <div id="passwordError">Incorrect password</div>
+  </div>
+</div>
 
-  <!-- PAGE 1: PP Calculator (password protected) -->
+<div class="container">
+
+  <!-- PAGE 1: PP Calculator -->
   <div class="page">
     <div class="card">
       <h2>PP Sheet Calculator</h2>
 
       <div id="ppApp" style="display:none;">
         <label>Length:</label>
-        <input type="number" id="length" placeholder="Enter length">
+        <input type="number" id="length">
 
         <label>Width:</label>
-        <input type="number" id="width" placeholder="Enter width">
+        <input type="number" id="width">
 
         <label>Unit:</label>
         <select id="unit">
@@ -127,23 +149,19 @@
 
         <div id="resultPP"></div>
       </div>
-
-      <div id="ppDenied" class="denied" style="display:none;">
-        Access Denied ❌
-      </div>
     </div>
   </div>
 
-  <!-- PAGE 2: Rexine Calculator (no password) -->
+  <!-- PAGE 2: Rexine Calculator -->
   <div class="page">
     <div class="card">
-      <h2>Rexine Piece Cost Calculator</h2>
+      <h2>Rexine Bag Cost Calculator</h2>
 
-      <label>Sheet Width (inches)</label>
+      <label>Roll Width (inches)</label>
       <input type="number" id="rexWidth" value="54">
 
-      <label>Sheet Height (meters)</label>
-      <input type="number" id="rexHeight" value="0.5" step="0.01">
+      <label>Length Used (meters)</label>
+      <input type="number" id="rexHeight" value="1" step="0.01">
 
       <label>Piece Width (inches)</label>
       <input type="number" id="rexPieceW" step="0.01">
@@ -151,7 +169,7 @@
       <label>Piece Height (inches)</label>
       <input type="number" id="rexPieceH" step="0.01">
 
-      <label>Total Sheet Cost (₹)</label>
+      <label>Price per meter (₹)</label>
       <input type="number" id="rexCost" value="160">
 
       <button onclick="calculateRexine()">Calculate</button>
@@ -163,94 +181,87 @@
 </div>
 
 <script>
-  // ----- Password protection for PP page -----
-  (function() {
-    const password = "pp123"; // same as your old page
-    const entered = prompt("Enter password to access the PP Sheet Calculator:");
-    if (entered === password) {
-      document.getElementById("ppApp").style.display = "block";
-    } else {
-      document.getElementById("ppDenied").style.display = "block";
-    }
-  })();
+/* ---------------- PASSWORD SYSTEM ---------------- */
+const PASSWORD = "pp123";
 
-  // ----- PP Calculator logic (your original, just renamed to calculatePP) -----
-  function calculatePP() {
-    const length = parseFloat(document.getElementById("length").value);
-    const width = parseFloat(document.getElementById("width").value);
-    const unit = document.getElementById("unit").value;
-    const thickness = parseFloat(document.getElementById("thickness").value);
-    const density = parseFloat(document.getElementById("density").value);
-    const pricePerKg = parseFloat(document.getElementById("pricePerKg").value);
+function checkPassword() {
+  const entered = document.getElementById("passwordInput").value;
 
-    if (!length || !width || !thickness || !density || !pricePerKg) {
-      alert("Please fill in all fields.");
-      return;
-    }
+  if (entered === PASSWORD) {
+    document.getElementById("passwordBox").style.display = "none";
+    document.getElementById("ppApp").style.display = "block";
+  } else {
+    document.getElementById("passwordError").style.display = "block";
+  }
+}
 
-    // convert to cm
-    let lengthCm = unit === "inch" ? length * 2.54 : length;
-    let widthCm = unit === "inch" ? width * 2.54 : width;
+/* ---------------- PP CALCULATOR ---------------- */
+function calculatePP() {
+  const length = parseFloat(document.getElementById("length").value);
+  const width = parseFloat(document.getElementById("width").value);
+  const unit = document.getElementById("unit").value;
+  const thickness = parseFloat(document.getElementById("thickness").value);
+  const density = parseFloat(document.getElementById("density").value);
+  const pricePerKg = parseFloat(document.getElementById("pricePerKg").value);
 
-    // thickness micron to cm
-    let thicknessCm = thickness / 10000;
-
-    // volume in cubic cm
-    let volume = lengthCm * widthCm * thicknessCm;
-
-    // weight in grams
-    let weightG = volume * density;
-
-    // weight in kg
-    let weightKg = weightG / 1000;
-
-    // price
-    let price = weightKg * pricePerKg;
-
-    document.getElementById("resultPP").innerHTML = `
-      <h3>Result</h3>
-      <p><b>Weight:</b> ${weightKg.toFixed(4)} kg</p>
-      <p><b>Price:</b> ₹${price.toFixed(2)}</p>
-    `;
+  if (!length || !width || !thickness || !density || !pricePerKg) {
+    alert("Please fill all fields.");
+    return;
   }
 
-  // ----- Rexine calculator (with wastage, simple piece fitting) -----
-  function calculateRexine() {
-    const w = parseFloat(document.getElementById('rexWidth').value);
-    const hMeters = parseFloat(document.getElementById('rexHeight').value);
-    const pw = parseFloat(document.getElementById('rexPieceW').value);
-    const ph = parseFloat(document.getElementById('rexPieceH').value);
-    const cost = parseFloat(document.getElementById('rexCost').value);
+  let lengthCm = unit === "inch" ? length * 2.54 : length;
+  let widthCm  = unit === "inch" ? width * 2.54  : width;
+  let thicknessCm = thickness / 10000;
 
-    if (!w || !hMeters || !pw || !ph || !cost) {
-      alert("Please fill in all fields.");
-      return;
-    }
+  let volume = lengthCm * widthCm * thicknessCm;
+  let weightKg = (volume * density) / 1000;
+  let price = weightKg * pricePerKg;
 
-    // convert height from meters to inches
-    const hInches = hMeters * 39.3701;
+  document.getElementById("resultPP").innerHTML = `
+    <h3>Result</h3>
+    <p><b>Weight:</b> ${weightKg.toFixed(4)} kg</p>
+    <p><b>Price:</b> ₹${price.toFixed(2)}</p>
+  `;
+}
 
-    const across = Math.floor(w / pw);
-    const down = Math.floor(hInches / ph);
-    const pieces = across * down;
+/* ---------------- REXINE CALCULATOR ---------------- */
+function calculateRexine() {
+  const w = parseFloat(document.getElementById('rexWidth').value);
+  const hMeters = parseFloat(document.getElementById('rexHeight').value);
+  const pw = parseFloat(document.getElementById('rexPieceW').value);
+  const ph = parseFloat(document.getElementById('rexPieceH').value);
+  const costPerMeter = parseFloat(document.getElementById('rexCost').value);
 
-    if (pieces <= 0) {
-      document.getElementById("resultRexine").innerHTML = `
-        <h3>Result</h3>
-        <p>No full pieces fit in this sheet with given size.</p>
-      `;
-      return;
-    }
+  if (!w || !hMeters || !pw || !ph || !costPerMeter) {
+    alert("Please fill all fields.");
+    return;
+  }
 
-    const pricePerPiece = cost / pieces;
+  const hInches = hMeters * 39.3701;
 
+  const across = Math.floor(w / pw);
+  const down = Math.floor(hInches / ph);
+  const pieces = across * down;
+
+  if (pieces <= 0) {
     document.getElementById("resultRexine").innerHTML = `
       <h3>Result</h3>
-      <p><b>Total usable pieces:</b> ${pieces}</p>
-      <p><b>Cost per piece:</b> ₹${pricePerPiece.toFixed(2)}</p>
+      <p>No usable pieces fit.</p>
     `;
+    return;
   }
 
+  const totalCost = hMeters * costPerMeter;
+  const costPerPiece = totalCost / pieces;
+  const costPerBag = costPerPiece * 4;
+
+  document.getElementById("resultRexine").innerHTML = `
+    <h3>Result</h3>
+    <p><b>Total pieces:</b> ${pieces}</p>
+    <p><b>Total sheet cost:</b> ₹${totalCost.toFixed(2)}</p>
+    <p><b>Cost per bag (4 pcs):</b> ₹${costPerBag.toFixed(2)}</p>
+  `;
+}
 </script>
 
 </body>
